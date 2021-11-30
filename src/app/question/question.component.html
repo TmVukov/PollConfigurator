@@ -1,0 +1,24 @@
+<div class="poll__question-container">
+  <div *ngFor="let question of questions; let i = index;"
+  [ngStyle]="{'border-color': getBackgroundColor(question)}"
+  class="poll__question-content">
+    <input type="text" class="poll__question-inputEdit" [placeholder]="'Pitanje' + (i+1)" [(ngModel)]="question.text">
+    <div class="poll__question-answerBox">
+      <app-answer [index]="i"
+                  [questions]="questions"
+                  [optionalAnswerAdded]="optionalAnswerAdded"
+                  class="poll__question-answer">
+      </app-answer>
+      <button (click)="removeQuestion(i)" class="poll__btn remove">Odustani</button>
+    </div>
+  </div>
+
+  <button (click)="addQuestion()" class="poll__btn">
+    <mat-icon class="poll__btn-icon" [ngStyle]="{'color': 'gold'}">add_circle</mat-icon>Dodaj pitanje
+  </button>
+</div>
+
+
+
+
+

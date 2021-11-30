@@ -1,0 +1,93 @@
+<section>
+  <div class="poll__breadcrumbs">
+    <div class="poll__breadcrumbs-header">Ankete</div>
+    <div class="poll__breadcrumbs-title">Ankete / <span>{{pollTitle}}</span></div>
+  </div>
+
+  <mat-stepper (selectionChange)="selectionChange($event)" #stepper>
+    <mat-step label="Uređivanje" state="edit">
+      <div class="poll__edit-container">
+        <input type="text" class="poll__edit-inputTitle" [placeholder]="'Nova anketa'" [(ngModel)]="pollTitle" [ngClass]="{'active': editableTitle}">
+
+        <app-question [ngClass]="{'active': selectedQuestion}"
+                      [selectedQuestion]="selectedQuestion"
+                      [questions]="questions"
+                      class="poll__edit-question">
+        </app-question>
+      </div>
+    </mat-step>
+
+    <mat-step label="Pregled" state="visibility">
+      <div class="poll__display-container">
+        <div class="poll__display-titleBox" (click)="editTitle()">
+          <div class="poll__display-title">{{pollTitle}}</div>
+          <mat-icon class="edit__icon">edit</mat-icon>
+        </div>
+
+        <div class="poll__display-content" *ngFor="let question of questions; let i = index;">
+          <div class="poll__display-questionBox" (click)="edit(question)">
+            <div class="poll__display-question">{{(i+1) + '.' + ' ' + question.text}}</div>
+            <mat-icon class="edit__icon">edit</mat-icon>
+          </div>
+
+          <div *ngFor="let answer of question.answers; let last = last">
+            <div class="poll__display-answerBox">
+              <input [type]="answer.type" [id]="answer.text" [name]="answer.text" class="poll__display-answer">
+              <label [for]="answer.text">{{answer.text}}</label>
+            </div>
+            <textarea
+              *ngIf="last && answer.textarea"
+              name="option"
+              id="option"
+              cols="30"
+              rows="10"
+              placeholder="Molimo upišite komentar"
+              class="poll__display-textarea"></textarea>
+          </div>
+        </div>
+
+        <div class="poll__display-buttons">
+          <button (click)="savePoll()" class="poll__btn">
+            <mat-icon class=".poll__btn-icon save__icon">save_alt</mat-icon>Spremi
+          </button>
+          <button (click)="remove()" class="poll__btn remove">Odustani</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step label="Rezultati" state="bar_chart">
+
+    </mat-step>
+  </mat-stepper>
+
+  <ng-template matStepperIcon="edit" >
+    <mat-icon class="edit__icon">edit</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="visibility">
+    <mat-icon>visibility</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="bar_chart">
+    <mat-icon>bar_chart</mat-icon>
+  </ng-template>
+</section>
+
+
+ <!-- <div *ngFor="let data of pollData">
+        <div *ngFor="let question of data?.questions; let i = index">
+            <div class="poll__box-question" *ngIf="!editableQuestion" (click)="edit()">
+              <div>{{question?.text}}</div>
+              <mat-icon class="edit__icon">edit</mat-icon>
+            </div>
+
+            <div *ngFor="let answer of question?.answers; let last = last">
+              <input [type]="answer.type" [id]="data.id" [name]="data.id">
+              <label [for]="data.id">{{answer.text}}</label>
+              <textarea
+                *ngIf="last && answer.textarea"
+                name="option"
+                id="option"
+                cols="30"
+                rows="10"
+                placeholder="Molimo upišite komentar"></textarea>
+            </div>
+        </div> -->

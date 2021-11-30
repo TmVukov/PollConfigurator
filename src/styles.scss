@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.poll__btn {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border: 2px solid gold;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.poll__btn-icon {
+  margin-right: 5px;
+}
