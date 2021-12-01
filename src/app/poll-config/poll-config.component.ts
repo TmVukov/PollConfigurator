@@ -1,8 +1,13 @@
-import { PollResponse, Question, PollRequest } from './../poll.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PollService } from './../poll.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { PollResponse, Question, PollRequest } from './../poll.model';
 
 @Component({
   selector: 'app-poll-config',
@@ -20,8 +25,12 @@ export class PollConfigComponent implements OnInit {
   public questions: Question[];
   public pollData: PollResponse[];
 
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  private verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
-    private pollService: PollService
+    private pollService: PollService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -56,8 +65,14 @@ export class PollConfigComponent implements OnInit {
 
     console.log(payload);
 
-
     this.pollService.saveData(payload);
+
+    this.snackBar.open('Anketa je uspješno spremljena!', '✕', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: 'poll__snackbar',
+      duration: 3000
+    })
 
     this.questions = [];
   }

@@ -32,7 +32,7 @@
   align-items: center;
   width: 90%;
   height: auto;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
   border: 1px solid gold;
   border-radius: 5px;
@@ -70,24 +70,18 @@
   justify-content: flex-start;
 }
 
-.poll__display-content:first-child {
-  margin-top: 20px;
-}
-
 .poll__display-titleBox {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  cursor: pointer;
 }
 
 .poll__display-questionBox {
   width: 100%;
   display: flex;
   align-items: center;
-  cursor: pointer;
   border-left: 5px solid gold;
 }
 
@@ -95,6 +89,7 @@
 .poll__display-question {
   padding: 10px 20px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .poll__display-title {
@@ -136,18 +131,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
 }
 
-.poll__display-titleBox .edit__icon,
-.poll__display-questionBox .edit__icon {
+.poll__display-title + .edit__icon,
+.poll__display-question + .edit__icon {
   visibility: hidden;
 }
 
-.poll__display-titleBox:hover .edit__icon,
-.poll__display-questionBox:hover .edit__icon {
+.poll__display-title:hover + .edit__icon,
+.poll__display-question:hover + .edit__icon {
   visibility: visible;
 }
-
 
 .edit__icon {
   display: flex;
@@ -155,7 +150,7 @@
   align-items: center;
   background: white;
   position: relative;
-  right: 10px;
+  right: 15px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -173,5 +168,7 @@
   font-weight: bold;
   color: cornflowerblue;
 }
+
+
 
 

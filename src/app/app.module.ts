@@ -5,6 +5,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { QuestionComponent } from './question/question.component';
     MatIconModule,
     MatSlideToggleModule,
     MatStepperModule,
+    MatSnackBarModule
   ],
   providers: [
     {

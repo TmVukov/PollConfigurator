@@ -20,3 +20,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .poll__btn-icon {
   margin-right: 5px;
 }
+
+.mat-step-header .mat-step-icon-selected {
+  background: gold;
+}
+
+.poll__snackbar {
+  background: cornflowerblue;
+}
+

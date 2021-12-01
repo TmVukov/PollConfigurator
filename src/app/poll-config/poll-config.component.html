@@ -4,8 +4,8 @@
     <div class="poll__breadcrumbs-title">Ankete / <span>{{pollTitle}}</span></div>
   </div>
 
-  <mat-stepper (selectionChange)="selectionChange($event)" #stepper>
-    <mat-step label="Uređivanje" state="edit">
+  <mat-stepper (selectionChange)="selectionChange($event)" labelPosition="bottom" #stepper>
+    <mat-step label="Uređivanje" state="build" completed="false">
       <div class="poll__edit-container">
         <input type="text" class="poll__edit-inputTitle" [placeholder]="'Nova anketa'" [(ngModel)]="pollTitle" [ngClass]="{'active': editableTitle}">
 
@@ -17,10 +17,10 @@
       </div>
     </mat-step>
 
-    <mat-step label="Pregled" state="visibility">
+    <mat-step label="Pregled" state="visibility" completed="false">
       <div class="poll__display-container">
-        <div class="poll__display-titleBox" (click)="editTitle()">
-          <div class="poll__display-title">{{pollTitle}}</div>
+        <div class="poll__display-titleBox">
+          <div class="poll__display-title" (click)="editTitle()">{{pollTitle}}</div>
           <mat-icon class="edit__icon">edit</mat-icon>
         </div>
 
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="poll__display-buttons">
+        <div class="poll__display-buttons" *ngIf="questions && questions.length > 0">
           <button (click)="savePoll()" class="poll__btn">
             <mat-icon class=".poll__btn-icon save__icon">save_alt</mat-icon>Spremi
           </button>
@@ -55,20 +55,24 @@
       </div>
     </mat-step>
 
-    <mat-step label="Rezultati" state="bar_chart">
+    <mat-step label="Ankete" state="receipt" completed="false" editable="false">
 
     </mat-step>
+
+    <ng-template matStepperIcon="build">
+      <mat-icon>build</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="visibility">
+      <mat-icon>visibility</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="receipt">
+      <mat-icon>receipt</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="edit" let-index="index">
+      <mat-icon>{{index === 0 ? 'build' : index === 1 ? 'visibility' : 'receipt'}}</mat-icon>
+    </ng-template>
   </mat-stepper>
 
-  <ng-template matStepperIcon="edit" >
-    <mat-icon class="edit__icon">edit</mat-icon>
-  </ng-template>
-  <ng-template matStepperIcon="visibility">
-    <mat-icon>visibility</mat-icon>
-  </ng-template>
-  <ng-template matStepperIcon="bar_chart">
-    <mat-icon>bar_chart</mat-icon>
-  </ng-template>
 </section>
 
 
