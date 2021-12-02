@@ -7,7 +7,12 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { PollDataComponent } from '../poll-data/poll-data.component';
 import { PollResponse, Question, PollRequest } from './../poll.model';
+
+
+
 
 @Component({
   selector: 'app-poll-config',
@@ -30,13 +35,18 @@ export class PollConfigComponent implements OnInit {
 
   constructor(
     private pollService: PollService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.pollTitle = 'Nova anketa';
 
     this.pollService.questions.subscribe(questions => this.questions = questions);
+  }
+
+  public getValue(event: Event) {
+    this.pollTitle = (<HTMLInputElement>event.target).value
   }
 
   public editTitle(): void {
@@ -52,15 +62,20 @@ export class PollConfigComponent implements OnInit {
 
   public selectionChange(event: StepperSelectionEvent): void {
     let stepLabel = event.selectedStep.state;
-    if (stepLabel == "visibility") {
+    if (stepLabel === 'visibility') {
       this.editableTitle = false;
+    }
+
+    if(stepLabel === 'receipt') {
+      this.getPollData();
     }
   }
 
   public savePoll(): void {
 
     const payload: PollRequest = {
-        questions: this.questions
+        questions: this.questions,
+        title: this.pollTitle
     }
 
     console.log(payload);
@@ -75,25 +90,30 @@ export class PollConfigComponent implements OnInit {
     })
 
     this.questions = [];
+    this.pollTitle = '';
   }
 
   public remove(): void {
     this.questions = [];
   }
 
-  // public deletePoll(id: string): void {
-  //   this.pollService.deleteData(id).subscribe(data =>{
-  //     console.log('delete', data);
-  //     this.getPollData();
-  //   });
+  public openDialog(id: string) {
+    this.dialog.open(PollDataComponent, {
+      height: 'auto',
+      width: '600px',
+      data: id
+    });
 
-  //   // this.pollService.update.subscribe(update => {
-  //   //   this.editableQuestion = update.editable,
-  //   //   this.questions = update.questions
-  //   // });
 
-  //   this.questions = [];
-  // }
+    this.getPollData();
+  }
+
+  public deletePoll(id: string): void {
+    this.pollService.deleteData(id).subscribe(data =>{
+      console.log('delete', data);
+      this.getPollData();
+    });
+  }
 
   private getPollData(): void {
     this.pollService.getData().subscribe(data => this.pollData = data);

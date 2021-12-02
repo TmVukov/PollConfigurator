@@ -111,27 +111,4 @@ export class AnswerComponent implements OnInit {
   }
 
 
-
-  // public savePollData(): void {
-
-  //   const payload: PollRequest = {
-  //       questions: this.questions
-  //   }
-
-  //   console.log(payload);
-
-
-  //   this.pollService.saveData(payload);
-
-  //   this.answers = [];
-  //   this.questions = [];
-  //   this.editableTitle = false;
-  //   this.editableQuestion = false;
-
-  //   this.pollService.update.next({
-  //     editable: this.editableQuestion,
-  //     questions: this.questions
-  //   });
-
-  // }
 }

@@ -5,14 +5,17 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { PollConfigComponent } from './poll-config/poll-config.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AnswerComponent } from './answer/answer.component';
 import { QuestionComponent } from './question/question.component';
+import { PollDataComponent } from './poll-data/poll-data.component';
+
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import { QuestionComponent } from './question/question.component';
     AppComponent,
     PollConfigComponent,
     AnswerComponent,
-    QuestionComponent
+    QuestionComponent,
+    PollDataComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,8 @@ import { QuestionComponent } from './question/question.component';
     MatIconModule,
     MatSlideToggleModule,
     MatStepperModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [
     {

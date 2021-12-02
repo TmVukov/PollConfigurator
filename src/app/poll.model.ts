@@ -11,6 +11,7 @@ export interface Question {
 
 export interface PollRequest {
   questions: Question[];
+  title: string;
 }
 
 export interface PostResponse {
@@ -20,4 +21,5 @@ export interface PostResponse {
 export interface PollResponse {
   id: string;
   questions: Question[];
+  title: string;
 }

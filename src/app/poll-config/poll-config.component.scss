@@ -170,5 +170,52 @@
 }
 
 
+.poll__receipt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  &-table {
+    border-collapse: collapse;
+    width: 50%;
+  }
+
+  &-text {
+    cursor: pointer;
+  }
+
+  &-text:hover {
+    text-decoration: underline;
+  }
+
+  &-icon {
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &-icon:hover {
+    color: crimson;
+  }
+
+  td, th {
+    border: 1px solid lightgray;
+    padding: 8px;
+  }
+
+  tr:nth-child(odd) {
+    background-color: lightgray;
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
