@@ -1,32 +1,62 @@
-<div class="poll__answer-container">
-  <div *ngFor="let answer of answers; let i = index; let last = last;" class="poll__answer-content">
-      <div class="poll__answer-input">
-        <input type="checkbox" *ngIf="checked" class="poll__answer-checkbox">
-        <input type="radio" *ngIf="!checked" name="answer" class="poll__answer-radio">
-        <input type="text" [placeholder]="'Odgovor' + (i+1)" [(ngModel)]="answer.text" class="poll__answer-inputEdit">
-        <mat-icon (click)="removeAnswer(i, questions[index].text)" class="poll__btn-cancel">close</mat-icon>
-      </div>
-      <textarea
-        *ngIf="last && optionalAnswerAdded"
-        [disabled]="optionalAnswerAdded"
-        name="option"
-        id="option"
-        cols="30"
-        rows="5"
-        placeholder="Molimo upišite komentar"
-        class="poll__answer-textarea"></textarea>
-
+<div class="poll__answer">
+  <div
+    *ngFor="let answer of answers; let i = index; let last = last"
+    class="poll__answer-content"
+  >
+    <div class="poll__answer-input">
+      <input type="checkbox" *ngIf="checked" class="poll__answer-checkbox" />
+      <input
+        *ngIf="!checked"
+        type="radio"
+        name="{{questions[index].text}}"
+        class="poll__answer-radio"
+      />
+      <input
+        [(ngModel)]="answer.text"
+        type="text"
+        [placeholder]="'Odgovor' + (i + 1)"
+        class="poll__answer-inputEdit"
+      />
+      <mat-icon
+        (click)="removeAnswer(i, questions[index].text)"
+        class="poll__btn-cancel"
+        >close</mat-icon
+      >
+    </div>
+    <textarea
+      *ngIf="last && optionalAnswerAdded"
+      [disabled]="optionalAnswerAdded"
+      name="option"
+      id="option"
+      cols="30"
+      rows="5"
+      placeholder="Molimo upišite komentar"
+      class="poll__answer-textarea"
+    ></textarea>
   </div>
   <div class="poll__answer-controls">
     <div class="poll__answer-add">
-      <button (click)="addAnswer(questions[index].text)" [disabled]="optionalAnswerAdded" class="poll__answer-addBtn">
+      <button
+        (click)="addAnswer(questions[index].text)"
+        [disabled]="optionalAnswerAdded"
+        class="poll__answer-addBtn"
+      >
         <mat-icon class="poll__btn-icon">add_circle</mat-icon>Dodaj odgovor
       </button>
-      <button *ngIf="answers.length > 0 && checked" (click)="addOptionalAnswer(questions[index].text)" [disabled]="optionalAnswerAdded" class="poll__answer-addOther">
-        <mat-icon class="poll__btn-icon">add_circle</mat-icon>Dodaj opciju 'Drugo'
+      <button
+        *ngIf="answers.length > 0 && checked"
+        (click)="addOptionalAnswer(questions[index].text)"
+        [disabled]="optionalAnswerAdded"
+        class="poll__answer-addOther"
+      >
+        <mat-icon class="poll__btn-icon">add_circle</mat-icon>Dodaj opciju
+        'Drugo'
       </button>
     </div>
-    <mat-slide-toggle *ngIf="answers.length > 1" (change)="slideChanged(questions[index].text)">Višestruki odabir</mat-slide-toggle>
+    <mat-slide-toggle
+      *ngIf="answers.length > 1"
+      (change)="slideChanged(questions[index].text)"
+      >Višestruki odabir</mat-slide-toggle
+    >
   </div>
 </div>
-

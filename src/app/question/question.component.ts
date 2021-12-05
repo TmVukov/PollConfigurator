@@ -1,36 +1,32 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer, Question } from '../poll.model';
+import { Question } from '../poll.model';
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit {
-  @Input() editableTitle: boolean;
-  @Input() selectedQuestion: Question;
-  @Input() answers: Answer[];
+  @Input() selectedQuestion: Question | null;
   @Input() questions: Question[];
 
   public checked: boolean;
-  public optionalAnswerAdded: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.questions = [];
-    this.answers = [];
   }
 
   public addQuestion(): void {
     const question: Question = {
       answers: [],
-      text: ''
+      text: '',
     };
 
     this.questions.push(question);
+    this.selectedQuestion = null;
   }
-
 
   public removeQuestion(index: number): void {
     this.questions.splice(index, 1);
@@ -38,11 +34,10 @@ export class QuestionComponent implements OnInit {
 
   public getBackgroundColor(question: Question): string {
     if (this.selectedQuestion === question) {
-      return 'crimson'
+      return 'crimson';
+    } else if (!this.selectedQuestion) {
+      return '';
     }
     return '';
   }
-
-
-
 }

@@ -1,0 +1,140 @@
+<section>
+  <div class="poll__breadcrumbs">
+    <div class="poll__breadcrumbs-header">Ankete</div>
+    <div class="poll__breadcrumbs-title">
+      Ankete / <span>{{ pollTitle }}</span>
+    </div>
+  </div>
+
+  <mat-stepper
+    (selectionChange)="selectionChange($event)"
+    labelPosition="bottom"
+    #stepper
+  >
+    <mat-step label="Uređivanje" state="build" completed="false">
+      <div class="poll__build">
+        <input
+          [ngClass]="{ active: editableTitle }"
+          (input)="getValue($event)"
+          type="text"
+          [placeholder]="'Nova anketa'"
+          class="poll__build-inputTitle"
+        />
+
+        <app-question
+          [ngClass]="{ active: selectedQuestion }"
+          [selectedQuestion]="selectedQuestion"
+          [questions]="questions"
+          class="poll__build-question"
+        >
+        </app-question>
+      </div>
+    </mat-step>
+
+    <mat-step label="Pregled" state="visibility" completed="false">
+      <div class="poll__visibility">
+        <div
+          class="poll__visibility-titleBox"
+          *ngIf="pollTitle !== 'Nova anketa'"
+        >
+          <div class="poll__visibility-title" (click)="editTitle()">
+            {{ pollTitle }}
+          </div>
+          <mat-icon class="edit__icon">edit</mat-icon>
+        </div>
+
+        <div
+          class="poll__visibility-content"
+          *ngFor="let question of questions; let i = index"
+        >
+          <div class="poll__visibility-questionBox" (click)="edit(question)">
+            <div class="poll__visibility-question">
+              {{ i + 1 + "." + " " + question.text }}
+            </div>
+            <mat-icon class="edit__icon">edit</mat-icon>
+          </div>
+
+          <div *ngFor="let answer of question.answers; let last = last">
+            <div class="poll__visibility-answerBox">
+              <input
+                [type]="answer.type"
+                [id]="answer.text"
+                name="{{ question.text }}"
+                class="poll__visibility-answer"
+              />
+              <label [for]="answer.text">{{ answer.text }}</label>
+            </div>
+            <textarea
+              *ngIf="last && answer.textarea"
+              name="option"
+              id="option"
+              cols="30"
+              rows="10"
+              placeholder="Molimo upišite komentar"
+              class="poll__visibility-textarea"
+            ></textarea>
+          </div>
+        </div>
+
+        <div
+          *ngIf="questions && questions.length > 0"
+          class="poll__visibility-buttons"
+        >
+          <button (click)="savePoll()" class="poll__btn">
+            <mat-icon class=".poll__btn-icon save__icon">save_alt</mat-icon
+            >Spremi
+          </button>
+          <button (click)="remove()" class="poll__btn remove">Odustani</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step label="Ankete" state="receipt" completed="false" editable="false">
+      <div class="poll__receipt">
+        <ng-container *ngIf="pollData && pollData.length > 0">
+          <table class="poll__receipt-table">
+            <colgroup>
+              <col style="width: 5%" />
+              <col style="width: 85%" />
+              <col style="width: 10%" />
+            </colgroup>
+            <tr>
+              <th colspan="3">Moje ankete</th>
+            </tr>
+            <tr *ngFor="let data of pollData; let i = index">
+              <td>{{ i + 1 + "." }}</td>
+              <td
+                class="poll__receipt-text"
+                mat-button
+                (click)="openDialog(data.id)"
+              >
+                {{ data.title }}
+              </td>
+              <td class="poll__receipt-icon">
+                <mat-icon (click)="deletePoll(data.id)">close</mat-icon>
+              </td>
+            </tr>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="pollData && pollData.length === 0">
+          <h3>Nema spremljenih anketa.</h3>
+        </ng-container>
+      </div>
+    </mat-step>
+
+    <ng-template matStepperIcon="build">
+      <mat-icon>build</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="visibility">
+      <mat-icon>visibility</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="receipt">
+      <mat-icon>receipt</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="edit" let-index="index">
+      <mat-icon>{{
+        index === 0 ? "build" : index === 1 ? "visibility" : "receipt"
+      }}</mat-icon>
+    </ng-template>
+  </mat-stepper>
+</section>

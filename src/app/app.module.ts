@@ -10,21 +10,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
-import { PollConfigComponent } from './poll-config/poll-config.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AnswerComponent } from './answer/answer.component';
 import { QuestionComponent } from './question/question.component';
-import { PollDataComponent } from './poll-data/poll-data.component';
+import { DataComponent } from './data/data.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PollConfigComponent,
+    ConfigurationComponent,
     AnswerComponent,
     QuestionComponent,
-    PollDataComponent
+    DataComponent
   ],
   imports: [
     BrowserModule,

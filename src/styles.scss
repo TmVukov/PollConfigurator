@@ -1,7 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+$color-primary: gold;
+$color-secondary: cornflowerblue;
 
 .poll__btn {
   width: 150px;
@@ -9,7 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  border: 2px solid gold;
+  border: 2px solid $color-primary;
   border-radius: 5px;
   padding: 5px 10px;
   background: none;
@@ -21,11 +30,39 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-right: 5px;
 }
 
+.edit__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  position: relative;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid lightgray;
+  color: gray;
+}
+
+.save__icon {
+  color: $color-primary;
+  margin-right: 10px;
+}
+
+.remove {
+  border: none;
+  font-weight: bold;
+  color: $color-secondary;
+}
+
+.mat-stepper-horizontal {
+  margin-top: 20px;
+}
+
 .mat-step-header .mat-step-icon-selected {
-  background: gold;
+  background: $color-primary;
 }
 
 .poll__snackbar {
-  background: cornflowerblue;
+  background: $color-secondary;
 }
-

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PollService } from './../poll.service';
+import { PollService } from '../poll.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import {
@@ -8,24 +8,21 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { PollDataComponent } from '../poll-data/poll-data.component';
-import { PollResponse, Question, PollRequest } from './../poll.model';
-
-
-
+import { DataComponent } from '../data/data.component';
+import { PollResponse, Question, PollRequest } from '../poll.model';
 
 @Component({
-  selector: 'app-poll-config',
-  templateUrl: './poll-config.component.html',
-  styleUrls: ['./poll-config.component.scss']
+  selector: 'app-configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.scss'],
 })
-export class PollConfigComponent implements OnInit {
+export class ConfigurationComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   public editableTitle: boolean;
 
   public pollTitle: string;
-  public selectedQuestion: Question;
+  public selectedQuestion: Question | null;
 
   public questions: Question[];
   public pollData: PollResponse[];
@@ -36,17 +33,23 @@ export class PollConfigComponent implements OnInit {
   constructor(
     private pollService: PollService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.pollTitle = 'Nova anketa';
 
-    this.pollService.questions.subscribe(questions => this.questions = questions);
+    this.pollService.questions.subscribe(
+      (questions) => (this.questions = questions)
+    );
   }
 
   public getValue(event: Event) {
-    this.pollTitle = (<HTMLInputElement>event.target).value
+    this.pollTitle = (<HTMLInputElement>event.target).value;
+
+    if (!this.pollTitle) {
+      this.pollTitle = 'Nova anketa';
+    }
   }
 
   public editTitle(): void {
@@ -56,7 +59,6 @@ export class PollConfigComponent implements OnInit {
 
   public edit(question: Question): void {
     this.stepper.previous();
-
     this.selectedQuestion = question;
   }
 
@@ -64,21 +66,19 @@ export class PollConfigComponent implements OnInit {
     let stepLabel = event.selectedStep.state;
     if (stepLabel === 'visibility') {
       this.editableTitle = false;
+      this.selectedQuestion = null;
     }
 
-    if(stepLabel === 'receipt') {
+    if (stepLabel === 'receipt') {
       this.getPollData();
     }
   }
 
   public savePoll(): void {
-
     const payload: PollRequest = {
-        questions: this.questions,
-        title: this.pollTitle
-    }
-
-    console.log(payload);
+      questions: this.questions,
+      title: this.pollTitle,
+    };
 
     this.pollService.saveData(payload);
 
@@ -86,11 +86,11 @@ export class PollConfigComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       panelClass: 'poll__snackbar',
-      duration: 3000
-    })
+      duration: 3000,
+    });
 
     this.questions = [];
-    this.pollTitle = '';
+    this.pollTitle = 'Nova anketa';
   }
 
   public remove(): void {
@@ -98,29 +98,23 @@ export class PollConfigComponent implements OnInit {
   }
 
   public openDialog(id: string) {
-    this.dialog.open(PollDataComponent, {
+    this.dialog.open(DataComponent, {
       height: 'auto',
       width: '600px',
-      data: id
+      data: id,
     });
-
 
     this.getPollData();
   }
 
   public deletePoll(id: string): void {
-    this.pollService.deleteData(id).subscribe(data =>{
+    this.pollService.deleteData(id).subscribe((data) => {
       console.log('delete', data);
       this.getPollData();
     });
   }
 
   private getPollData(): void {
-    this.pollService.getData().subscribe(data => this.pollData = data);
+    this.pollService.getData().subscribe((data) => (this.pollData = data));
   }
-
-
-
-
-
 }
